@@ -11,15 +11,6 @@
 }
 
 
-.media {
-    display: flex;
-    align-items: flex-start;
-}
-
-.medida-body {
-    flex: 1
-}
-
 .media-img-wrapper {
     width: 200px;
     text-align: center;
