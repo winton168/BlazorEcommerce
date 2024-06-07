@@ -21,6 +21,8 @@ namespace BlazorEcommerce.Shared
 
         public int CategoryId { get; set; }
 
+        public bool Feature { get; set; } = false;
+
         public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
 
     }
