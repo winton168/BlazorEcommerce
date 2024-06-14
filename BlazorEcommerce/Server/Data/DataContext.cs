@@ -273,5 +273,8 @@
 
         public DbSet<ProductVariant> ProductVariants { get; set; }
 
+        public DbSet<User> Users { get; set; }  
+
+
     }
 }
