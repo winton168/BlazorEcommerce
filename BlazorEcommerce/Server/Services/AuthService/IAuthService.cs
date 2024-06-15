@@ -6,5 +6,7 @@
 
         Task<bool> UserExists(string emai);
  
+        Task<ServiceResponse<string>> Login(string email, string password);
+
     }
 }
