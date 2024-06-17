@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace BlazorEcommerce.Server.Controllers
 {
@@ -34,15 +36,63 @@ namespace BlazorEcommerce.Server.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<ServiceResponse<string>>> Login(UserLogin request)
         {
-            var response = await _authService.Login(request.Email, request.Password);
+            ServiceResponse<string> response = new ServiceResponse<string>();
 
-            if ( !response.Success )
+            try
+            {
+                response = await _authService.Login(request.Email, request.Password);
+
+                if (!response.Success)
+                {
+                    return BadRequest(response);
+                }
+            }
+            catch(Exception ex)
+            {
+                string error = ex.Message.ToString();
+                response.Success = false;
+                response.Message = ex.ToString();
+                return BadRequest(response);
+            }
+          
+
+            return Ok(response);
+        }
+
+
+        //[HttpPost("changepassword")]
+        //public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string Password)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        //    var response = await _authService.ChangePassword(int.Parse(userId), Password);
+
+        //    if (!response.Success)
+        //    {
+        //        return BadRequest(response);
+        //    }
+
+        //    return Ok(response);
+        //}
+
+
+        [HttpPost("change-password"), Authorize]
+        public async Task<ActionResult<ServiceResponse<bool>>> ChangePassword([FromBody] string Password)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var response = await _authService.ChangePassword(int.Parse(userId), Password);
+
+            if (!response.Success)
             {
                 return BadRequest(response);
             }
 
             return Ok(response);
         }
+
+
+
+
 
     }
 
