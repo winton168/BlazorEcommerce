@@ -14,5 +14,7 @@
 
         Task UpdateQuantity(CartProductResponse product);
 
+        Task StoreCartItems(bool emptyLocalCart);
+
     }
 }
