@@ -12,6 +12,8 @@ namespace BlazorEcommerce.Server.Services.CartService
 
         Task<ServiceResponse<List<CartProductResponse>>> GetDbCartProducts();
 
+        Task<ServiceResponse<bool>> AddToCart(CartItem cartItem);
+
     }
 
 }
